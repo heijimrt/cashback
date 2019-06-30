@@ -7,8 +7,7 @@ import { createConnection } from 'typeorm';
  */
 App.bootstrap();
 
-
 createConnection()
   .then(async connection => {
     // here you can start to work with your entities
-  }).catch(error => console.log(error));
+  }).catch(error => console.error(error));
