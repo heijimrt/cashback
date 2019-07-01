@@ -11,10 +11,10 @@ export default class App {
 
   constructor() {
     this.app = express();
-    this.setup();
+    this.setupRouteSystem();
   }
 
-  private setup(): void {
+  private setupRouteSystem(): void {
     new RouteServer().start();
   }
 }

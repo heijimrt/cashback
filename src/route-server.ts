@@ -4,6 +4,7 @@ import {
     GlobalAcceptMimesMiddleware,
 } from "@tsed/common";
 import "@tsed/swagger";
+import * as cors from 'cors';
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const compress = require('compression');
@@ -32,6 +33,7 @@ export class RouteServer extends ServerLoader {
         .use(GlobalAcceptMimesMiddleware)
         .use(cookieParser())
         .use(compress({}))
+        .use(cors())
         .use(methodOverride())
         .use(bodyParser.json())
         .use(bodyParser.urlencoded({

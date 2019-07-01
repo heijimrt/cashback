@@ -3,9 +3,12 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
+  OneToMany
 } from 'typeorm';
 import { Length, IsNotEmpty } from 'class-validator';
+import * as bcrypt from "bcryptjs";
+import { Order } from './Order';
 
 @Entity()
 export class User {
@@ -38,6 +41,12 @@ export class User {
   @IsNotEmpty()
   role: string;
 
+  @OneToMany(
+    type => Order,
+    order => order.user
+  )
+  order: Order[];
+
   @Column()
   @CreateDateColumn()
   createdAt: Date;
@@ -45,4 +54,12 @@ export class User {
   @Column()
   @UpdateDateColumn()
   updatedAt: Date;
+
+  public hashPassword(): void {
+    this.password = bcrypt.hashSync(this.password, 8);
+  }
+
+  public checkIfUnencryptedPasswordIsValid(unencryptedPassword: string) {
+    return bcrypt.compareSync(unencryptedPassword, this.password);
+  }
 }
