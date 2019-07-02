@@ -14,6 +14,10 @@ export default class App {
     this.setupRouteSystem();
   }
 
+  public getApp(): express.Application {
+    return this.app;
+  }
+
   private setupRouteSystem(): void {
     new RouteServer().start();
   }
