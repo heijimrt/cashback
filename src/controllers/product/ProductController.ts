@@ -2,9 +2,12 @@ import { Controller, Get } from '@tsed/common';
 import * as Express from 'express';
 import { getRepository } from 'typeorm';
 import { Product } from '../../entity/Product';
+import { ProductService } from '../../services/product/product.service';
 
 @Controller("/products")
 export class ProductController {
+
+  constructor(private readonly productService: ProductService) {}
 
   @Get()
   public async findAll(
@@ -12,12 +15,13 @@ export class ProductController {
     response: Express.Response
   ): Promise<Express.Response> {
 
-    const products: Array<Product> = await getRepository(Product).find();
-    return response
-      .status(200)
-      .json({
-        data: products
-      });
+    return this.productService
+        .getAll()
+        .then((products: Array<Product>) => {
+          return response
+              .status(200)
+              .json({ data: products });
+        });
   }
 
   @Get("/:id")

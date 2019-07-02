@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require ts-node/register test/*.ts"
+    "test": "mocha --require ts-node/register test/*.ts",
+    "migration": "ts-node ./node_modules/typeorm/cli.js migration:run"
   },
   "author": "Heiji Morimoto",
   "license": "ISC",

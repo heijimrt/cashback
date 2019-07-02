@@ -7,11 +7,12 @@ import {
   OneToMany
 } from 'typeorm';
 import { Length, IsNotEmpty } from 'class-validator';
-import * as bcrypt from "bcryptjs";
+import * as bcrypt from 'bcryptjs';
 import { Order } from './Order';
 
 @Entity()
 export class User {
+
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -28,7 +29,6 @@ export class User {
   email: string;
 
   @Column()
-  @Length(4, 100)
   password: string;
 
   @Column({
@@ -55,11 +55,11 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  public hashPassword(): void {
+  hashPassword(): void {
     this.password = bcrypt.hashSync(this.password, 8);
   }
 
-  public checkIfUnencryptedPasswordIsValid(unencryptedPassword: string) {
+  checkIfUnencryptedPasswordIsValid(unencryptedPassword: string) {
     return bcrypt.compareSync(unencryptedPassword, this.password);
   }
 }

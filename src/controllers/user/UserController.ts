@@ -37,9 +37,8 @@ export class UserController {
     request: Express.Request,
     response: Express.Response
   ) {
-    //Get parameters from the body
-    let { firstName, email, password, role, surName, document } = request.body;
-    let user = new User();
+    const { firstName, email, password, role, surName, document } = request.body;
+    const user: User = new User();
     user.firstName = firstName;
     user.surName = surName;
     user.email = email;
@@ -62,7 +61,7 @@ export class UserController {
     try {
       await userRepository.save(user);
     } catch (e) {
-      response.status(409).send("username already in use");
+      response.status(409).send(`username already in use${e}`);
       return;
     }
 

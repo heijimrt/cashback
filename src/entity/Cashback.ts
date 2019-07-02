@@ -3,8 +3,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
+  OneToOne
 } from 'typeorm';
+import { User } from './User';
 
 @Entity()
 export class Cashback {
@@ -16,6 +18,9 @@ export class Cashback {
 
   @Column()
   percentValue: string;
+
+  @OneToOne(type => User)
+  user: User;
 
   @Column()
   @CreateDateColumn()
