@@ -1,5 +1,5 @@
-import { BonificationValue } from '../../../interfaces/bonification-value.interface';
-import { BonificationPercentHelper } from '../../../helpers/bonification-percent.helper';
+import { BonificationValue } from '../../../interfaces/BonificationValue.interface';
+import { BonificationPercentHelper } from '../../../helpers/BonificationPercent.helper';
 
 export class ProductBonificationTwentyPercent implements BonificationValue {
   public calculate(value: number) {

@@ -2,7 +2,7 @@ import { Controller, Get } from '@tsed/common';
 import * as Express from 'express';
 import { getRepository } from 'typeorm';
 import { Product } from '../../entity/Product';
-import { ProductService } from '../../services/product/product.service';
+import { ProductService } from '../../services/product/Product.service';
 
 @Controller("/products")
 export class ProductController {

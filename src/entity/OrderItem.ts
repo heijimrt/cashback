@@ -5,7 +5,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  OneToOne
+  OneToOne,
+  JoinTable
 } from 'typeorm';
 import { Order } from './Order';
 import { Product } from './Product';
@@ -15,7 +16,10 @@ export class OrderItem {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(type => Product)
+  @OneToOne(
+    type => Product,
+  )
+  @JoinTable()
   product: Product;
 
   @Column()

@@ -17,11 +17,6 @@ export class Product {
   @Column()
   label: string;
 
-  @Column({
-    type: 'int',
-  })
-  price: number;
-
   @Column()
   @CreateDateColumn()
   createdAt: Date;

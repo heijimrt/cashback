@@ -5,13 +5,15 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  OneToMany
+  OneToMany,
+  JoinTable
 } from 'typeorm';
 import { OrderItem } from './OrderItem';
 import { User } from './User';
 
 @Entity()
 export class Order {
+
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -23,8 +25,10 @@ export class Order {
 
   @OneToMany(
     type => OrderItem,
-    item => item.order
+    item => item.order,
+    { eager: true }
   )
+  @JoinTable()
   orderItems: OrderItem[];
 
   @Column()

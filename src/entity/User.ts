@@ -4,7 +4,8 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany
+  OneToMany,
+  JoinTable
 } from 'typeorm';
 import { Length, IsNotEmpty } from 'class-validator';
 import * as bcrypt from 'bcryptjs';
@@ -32,15 +33,17 @@ export class User {
   password: string;
 
   @Column({
-    type: 'int',
+    type: 'varchar',
     unique: true
   })
   document: number;
 
   @OneToMany(
     type => Order,
-    order => order.user
+    order => order.user,
+    { eager: true }
   )
+  @JoinTable()
   order: Order[];
 
   @Column()

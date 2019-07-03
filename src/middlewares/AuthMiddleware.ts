@@ -8,7 +8,7 @@ import {
   Middleware,
   Req} from "@tsed/common";
 import * as expressJwt from "express-jwt";
-import * as authConfig from '../../config/auth.json';
+import * as authConfig from '../config/auth.json';
 
 @Middleware()
 export default class AuthenticationMiddleware implements IMiddleware {

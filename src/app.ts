@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { RouteServer } from './route-server';
+import { RouteServer } from './RouteServer';
 
 export default class App {
 

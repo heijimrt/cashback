@@ -1,44 +1,41 @@
-// import {sign} from "jsonwebtoken";
 import {
     Inject,
     Service
 } from "@tsed/di";
-
-// import AuthenticationMiddleware from "@Infrastructure/Http/Middleware/AuthenticationMiddleware";
 import { User } from '../../entity/User';
-import { Repository } from 'typeorm';
+import { getRepository } from 'typeorm';
+import JwtTokenService from '../../services/security/JwtTokenService.service';
+import { Res } from '@tsed/common';
+import * as Express from 'express';
 
 @Service()
 export default class AuthService {
-    @Inject(User)
-    private readonly userRepository: Repository<User>;
 
-    public async register(user: User): Promise<User> {
-        return this.userRepository.save(user);
-    }
+    @Inject(JwtTokenService)
+    private readonly tokenService: JwtTokenService;
 
-    // public async retrieveUserByToken(token: string): Promise<User | null> {
-    //     const query = this.userModel.findOne({
-    //         // token,
-    //     });
+    public async register(
+        user: User,
+        @Res() response: Express.Response
+    ): Promise<Object> {
 
-    //     // return await query.exec();
-    // }
-
-    // public async retrieveUserByCredentials(username: string, password: string): Promise<User | null> {
-    //     const query = this.userModel.findOne({
-    //         email: username,
-    //         password: this.encryptPassword(password),
-    //     });
-
-    //     return await query.();
-    // }
-
-    // public async getUserToken(user: User): Promise<string> {
-    //     // return sign({user}, AuthenticationMiddleware.secret)
-    // }
-
-    private encryptPassword(password: string): string {
-        return password;
+        const userRepository = getRepository(User);
+        try {
+          await userRepository.save(user);
+        } catch (e) {
+            return {
+                status: 409,
+                message: `username already in use${e}`
+            };
+        }
+        user.password = '';
+        const token: string = this.tokenService.generate(user.id);
+        response
+            .status(201)
+            .send({ user, token });
+        return {
+            status: 201,
+            message: { user, token }
+        }
     }
 }
