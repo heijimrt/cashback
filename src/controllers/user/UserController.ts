@@ -37,13 +37,12 @@ export class UserController {
     request: Express.Request,
     response: Express.Response
   ) {
-    const { firstName, email, password, role, surName, document } = request.body;
+    const { firstName, email, password, surName, document } = request.body.data;
     const user: User = new User();
     user.firstName = firstName;
     user.surName = surName;
     user.email = email;
     user.password = password;
-    user.role = role;
     user.document = document;
 
     //Validade if the parameters are ok
@@ -52,7 +51,7 @@ export class UserController {
       response.status(400).send(errors);
       return;
     }
-
+    console.log(user);
     //Hash the password, to securely store on DB
     user.hashPassword();
 

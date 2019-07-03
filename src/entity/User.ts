@@ -37,10 +37,6 @@ export class User {
   })
   document: number;
 
-  @Column()
-  @IsNotEmpty()
-  role: string;
-
   @OneToMany(
     type => Order,
     order => order.user

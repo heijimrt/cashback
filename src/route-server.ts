@@ -5,6 +5,7 @@ import {
 } from "@tsed/common";
 import "@tsed/swagger";
 import * as cors from 'cors';
+import AuthenticationMiddleware from './middlewares/AuthMiddleware';
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const compress = require('compression');
@@ -34,6 +35,7 @@ export class RouteServer extends ServerLoader {
         .use(cookieParser())
         .use(compress({}))
         .use(cors())
+        .use(AuthenticationMiddleware)
         .use(methodOverride())
         .use(bodyParser.json())
         .use(bodyParser.urlencoded({
